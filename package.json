@@ -1,0 +1,28 @@
+{
+  "name": "filter-aws-sso-accounts",
+  "description": "Filter AWS SSO accounts based on account ID",
+  "type": "module",
+  "version": "1.1.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adam-du-nz/gm-scripts.git"
+  },
+  "scripts": {
+    "prettier": "prettier --write \"**/*.{js,cjs,mjs,ts,cts,mts,json,html,md,mdx,css,scss,less,yaml,yml}\""
+  },
+  "devDependencies": {
+    "@eslint/js": "^8.57.0",
+    "@types/common-tags": "^1.8.4",
+    "@types/node": "^20.11.20",
+    "esbuild": "0.20.1",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "^3.2.5",
+    "tsx": "^4.7.1",
+    "typescript": "^5.3.3",
+    "typescript-eslint": "^7.0.2"
+  },
+  "dependencies": {
+    "common-tags": "^1.8.2"
+  }
+}
