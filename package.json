@@ -8,6 +8,7 @@
     "url": "https://github.com/adam-du-nz/gm-scripts.git"
   },
   "scripts": {
+    "build": "node --import tsx ./esbuild.ts",
     "prettier": "prettier --write \"**/*.{js,cjs,mjs,ts,cts,mts,json,html,md,mdx,css,scss,less,yaml,yml}\""
   },
   "devDependencies": {

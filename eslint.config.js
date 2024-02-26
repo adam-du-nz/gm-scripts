@@ -16,6 +16,7 @@ export default tseslint.config(
       ".idea/**",
       ".vscode/**",
       "coverage/**",
+      "build/**",
     ],
   },
   eslint.configs.recommended,

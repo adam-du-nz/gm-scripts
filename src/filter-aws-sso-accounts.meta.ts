@@ -1,5 +1,5 @@
 import type { Metadata } from "../esbuild.plugin/metadata";
-import faviconPath from "./assets/filter_aws_sso_accounts.favicon.svg";
+import faviconPath from "./assets/filter-aws-sso-accounts.favicon.svg";
 import { version, repository, description } from "../package.json";
 
 const author: Metadata.Author = {

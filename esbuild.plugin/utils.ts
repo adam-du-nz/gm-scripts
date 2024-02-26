@@ -1,3 +1,5 @@
+import type { Metadata } from "./metadata";
+
 export function unique<T>(iterable: Maybe<Iterable<T>>, comparator: Comparator<T> = defaultComparator): T[] {
   if (comparator === defaultComparator) {
     return [...new Set(iterable)];
@@ -13,6 +15,8 @@ export function unique<T>(iterable: Maybe<Iterable<T>>, comparator: Comparator<T
 
   return result;
 }
+
+export type DefaultImport = Promise<{ default: Metadata }>;
 
 type Maybe<T> = T | null | undefined;
 type Comparator<T> = (a: T, b: T) => boolean;

@@ -1,0 +1,45 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - "v*.*.*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 8
+      - name: Setup Node.js using asdf
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: ".tool-versions"
+          cache: "pnpm"
+      - name: Install dependencies
+        run: pnpm install --ignore-scripts
+      - name: Build artefacts
+        run: pnpm run build
+        env:
+          ACCOUNT_IDS: ${{ secrets.AWS_ACCOUNT_IDS }}
+      - name: Get version from tag
+        id: tag_name
+        run: |
+          echo ::set-output name=current_version::${GITHUB_REF#refs/tags/v}
+        shell: bash
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+        with:
+          files: |
+            build/*.user.js
+            build/*.meta.js
+          name: Release ${{ steps.tag_name.outputs.current_version }}
+          tag_name: ${{ steps.tag_name.outputs.current_version }}
+          fail_on_unmatched_files: true
+          generate_release_notes: false

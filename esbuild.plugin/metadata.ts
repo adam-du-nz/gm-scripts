@@ -1,6 +1,7 @@
 import { source } from "common-tags";
 import { unique } from "./utils";
 
+// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace Metadata {
   export type Author =
     | string
@@ -31,7 +32,7 @@ export namespace Metadata {
     | "GM.setClipboard"
     | "GM.xmlHttpRequest"
     | "unsafeWindow"
-    | (string & {});
+    | (string & NonNullable<unknown>);
 
   export type CustomValue = string | string[] | undefined | null | Record<string, string>;
 
@@ -41,7 +42,7 @@ export namespace Metadata {
     | "document-body"
     | "document-idle"
     | "context-menu"
-    | (string & {});
+    | (string & NonNullable<unknown>);
 }
 
 export type Metadata = {
@@ -151,11 +152,9 @@ export function formatMetadata(metadata: Metadata) {
     .map(([key, value]) => `// @${key.padEnd(valuePadding)}${value}`.trimEnd())
     .join(separator);
 
-  const formattedMetadata = source`
+  return source`
     ${header}
-		${joinedProperties}
-		${footer}
+	${joinedProperties}
+	${footer}
 	`;
-
-  return formattedMetadata;
 }

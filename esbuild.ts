@@ -2,6 +2,7 @@ import { readdir, writeFile, stat } from "node:fs/promises";
 import path from "node:path";
 import * as esbuild from "esbuild";
 import { formatMetadata } from "./esbuild.plugin/metadata";
+import type { DefaultImport } from "./esbuild.plugin/utils";
 
 async function transformFiles() {
   const DEFAULT_GROUPS = ["#059712504573", "#313942877558"];
@@ -29,7 +30,7 @@ async function transformFiles() {
         outfile: outputMetaMjsPath,
         bundle: true,
         allowOverwrite: true,
-        minify: false, // Enable minification
+        minify: false,
         format: "esm",
         loader: {
           ".svg": "dataurl",
@@ -45,8 +46,9 @@ async function transformFiles() {
       const outputUserJsPath = path.join(import.meta.dirname, buildDir, `${path.parse(file).name}.user.js`);
       const outputMetaJsPath = path.join(import.meta.dirname, buildDir, `${path.parse(file).name}.meta.js`);
       const prebuiltMjsPath = path.join(import.meta.dirname, buildDir, `${path.parse(file).name}.meta.mjs`);
-      if (stat(prebuiltMjsPath)) {
-        const { default: metadata = "" } = await import(prebuiltMjsPath);
+      if (await stat(prebuiltMjsPath)) {
+        const importedData: DefaultImport = (await import(prebuiltMjsPath)) as DefaultImport;
+        const metadata = (await importedData)?.default;
         const banner = metadata ? formatMetadata(metadata) : "";
         // Use esbuild to transform and minify the JavaScript file
         const buildTask = esbuild.build({

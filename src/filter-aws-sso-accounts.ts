@@ -1,10 +1,11 @@
 function runScript() {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  const ACCOUNT_IDS = ACCOUNT_IDS_REPLACE;
+  const ACCOUNT_IDS = ACCOUNT_IDS_REPLACE as sting[];
   // Find the portal-instance-list element
   let instanceListElement: HTMLElement = document.querySelector("portal-instance-list");
   // Find the portal-application element
-  let applicationElement: HTMLElement = document.querySelector("portal-application");
+  const applicationElement: HTMLElement = document.querySelector("portal-application");
 
   // Check if both elements were found
   if (applicationElement === null) {
@@ -26,8 +27,9 @@ function runScript() {
   // Now filter portal-instance-list based on the condition
   instanceListElement = document.querySelector("portal-instance-list");
   if (instanceListElement) {
-    let childrenWithAccountId = Array.from(instanceListElement.children).filter((child) => {
-      let accountIdSpan: HTMLElement = child.querySelector(".accountId");
+    const childrenWithAccountId = Array.from(instanceListElement.children).filter((child) => {
+      const accountIdSpan: HTMLElement = child.querySelector(".accountId");
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       return accountIdSpan && ACCOUNT_IDS.includes(accountIdSpan.innerText);
     });
 
@@ -40,7 +42,7 @@ function runScript() {
     });
     // Click on all children that are in childrenWithAccountId
     childrenWithAccountId.forEach((child: HTMLElement) => {
-      let instanceSection: HTMLElement = child.querySelector(".instance-section");
+      const instanceSection: HTMLElement = child.querySelector(".instance-section");
       instanceSection.click();
     });
   } else {
