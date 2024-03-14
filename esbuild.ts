@@ -1,4 +1,4 @@
-import { readdir, writeFile, stat } from "node:fs/promises";
+import { readdir, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import * as esbuild from "esbuild";
 import { formatMetadata } from "./esbuild.plugin/metadata";
@@ -10,7 +10,7 @@ async function transformFiles() {
     process.env.ACCOUNT_IDS ?
       process.env.ACCOUNT_IDS.split(",")
         .filter((id) => id && !isNaN(Number(id)))
-        .map((id) => `#${id}`)
+        .map((id) => id.trim())
     : DEFAULT_GROUPS;
   const srcDir = "./src";
   const buildDir = "./build";
