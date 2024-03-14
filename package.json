@@ -14,14 +14,14 @@
   "devDependencies": {
     "@eslint/js": "^8.57.0",
     "@types/common-tags": "^1.8.4",
-    "@types/node": "^20.11.20",
+    "@types/node": "^20.11.27",
     "esbuild": "0.20.1",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "prettier": "^3.2.5",
     "tsx": "^4.7.1",
-    "typescript": "^5.3.3",
-    "typescript-eslint": "^7.0.2"
+    "typescript": "^5.4.2",
+    "typescript-eslint": "^7.2.0"
   },
   "dependencies": {
     "common-tags": "^1.8.2"
