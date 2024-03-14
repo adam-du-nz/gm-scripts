@@ -2,7 +2,7 @@
   "name": "filter-aws-sso-accounts",
   "description": "Filter AWS SSO accounts based on account ID",
   "type": "module",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/adam-du-nz/gm-scripts.git"
