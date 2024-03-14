@@ -5,7 +5,7 @@ import { formatMetadata } from "./esbuild.plugin/metadata";
 import type { DefaultImport } from "./esbuild.plugin/utils";
 
 async function transformFiles() {
-  const DEFAULT_GROUPS = ["#059712504573", "#313942877558"];
+  const DEFAULT_GROUPS = ["059712504573", "313942877558"];
   const accountIds =
     process.env.ACCOUNT_IDS ?
       process.env.ACCOUNT_IDS.split(",")

@@ -1,54 +1,37 @@
 function runScript() {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  const ACCOUNT_IDS = ACCOUNT_IDS_REPLACE as sting[];
-  // Find the portal-instance-list element
-  let instanceListElement: HTMLElement = document.querySelector("portal-instance-list");
-  // Find the portal-application element
-  const applicationElement: HTMLElement = document.querySelector("portal-application");
-
-  // Check if both elements were found
-  if (applicationElement === null) {
-    // If either portal-instance-list or portal-application is null,
-    // retry after a short delay
-    setTimeout(runScript, 100); // Retry after 100 milliseconds
-    return;
-  }
-  // If both elements are found, proceed with the script
-  // If portal-instance-list is null, find and click portal-application
-  if (instanceListElement === null) {
-    if (applicationElement) {
-      applicationElement.click();
-    } else {
-      console.error("portal-application element not found.");
-    }
-  }
-
-  // Now filter portal-instance-list based on the condition
-  instanceListElement = document.querySelector("portal-instance-list");
-  if (instanceListElement) {
-    const childrenWithAccountId = Array.from(instanceListElement.children).filter((child) => {
-      const accountIdSpan: HTMLElement = child.querySelector(".accountId");
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-      return accountIdSpan && ACCOUNT_IDS.includes(accountIdSpan.innerText);
-    });
-
-    // Now childrenWithAccountId contains the filtered children
-    // Hide all children that are not in childrenWithAccountId
-    Array.from(instanceListElement.children).forEach((child: HTMLElement) => {
-      if (!childrenWithAccountId.includes(child)) {
-        child.style.display = "none";
+  const ACCOUNT_IDS = ACCOUNT_IDS_REPLACE as string[];
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.type === "childList") {
+        const allAccounts: NodeListOf<HTMLElement> | [] = document.querySelectorAll(
+          'button[data-testid="account-list-cell"]',
+        );
+        if (allAccounts.length > 0) {
+          observer.disconnect();
+          hideAndClickAccounts(allAccounts, ACCOUNT_IDS);
+        }
       }
     });
-    // Click on all children that are in childrenWithAccountId
-    childrenWithAccountId.forEach((child: HTMLElement) => {
-      const instanceSection: HTMLElement = child.querySelector(".instance-section");
-      instanceSection.click();
-    });
-  } else {
-    console.error("portal-instance-list element not found.");
-  }
+  });
+  observer.observe(document.body, { childList: true, subtree: true });
 }
 
-// Start checking for both elements
+function hideAndClickAccounts(allAccounts: NodeListOf<HTMLElement>, ACCOUNT_IDS: string[]) {
+  const event = new MouseEvent("click", {
+    bubbles: true,
+    cancelable: true,
+    view: window,
+  });
+  Array.from(allAccounts).forEach((account: HTMLElement) => {
+    if (!ACCOUNT_IDS.some((accountId) => account.innerText.trim().includes(accountId))) {
+      // This block will only execute if NONE of the ACCOUNT_IDS elements are found in account. console.log("hidden buttons");
+      account.style.display = "none";
+    } else {
+      account.dispatchEvent(event);
+    }
+  });
+}
+
 runScript();
